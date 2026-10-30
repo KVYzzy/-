@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Парфюмерный магазин | ЖанпольГотье</title>
+    
+    <!-- Встроенные CSS стили (теперь всё работает в одном файле) -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #fcfbfa;
+            color: #2c2c2c;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .main-header {
+            background-color: #1a1a1a;
+            color: #fff;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .navigation ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        .navigation a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .navigation a:hover {
+            color: #fff;
+        }
+
+        .product-container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .gallery-section img {
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        .info-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+
+        h2 {
+            font-size: 18px;
+            color: #8c8c8c;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+
+        .options-group {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+        }
+
+        legend {
+            padding: 0 10px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            font-size: 16px;
+        }
+
+        .price-box {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        #current-price {
+            font-weight: bold;
+            color: #b8860b;
+        }
+
+        .btn-buy {
+            width: 100%;
+            padding: 15px;
+            background-color: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-buy:hover {
+            background-color: #333;
+        }
+
+        .main-footer {
+            background-color: #1a1a1a;
+            color: #666;
+            text-align: center;
+            padding: 20px;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo">Французкий ля парфюм</div>
+        <nav class="navigation">
+            <ul>
+                <li><a href="#catalog">Каталог</a></li>
+                <li><a href="#about">О бренде</a></li>
+                <li><a href="#contacts">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="product-container">
+        <section class="gallery-section">
+            <img id="product-img" src="perfume.jpg" alt="Флакон парфюма">
+        </section>
+        <section class="info-section">
+            <h1>ЖанпольГотье</h1>
+            <h2>Парфюмерная вода</h2>
+            <p class="description">
+                Загадочный и притягательный аромат, черного кофе
+            </p>
+            <hr
+            <form id="order-form" onsubmit="return false;">
+                <fieldset class="options-group">
+                    <legend>Выберите параметры</legend>
+                    <label for="volume-select">Объем флакона:</label>
+                    <select id="volume-select" name="volume">
+                        <option value="30" data-price="4500">30 мл — 4 500 ₽</option>
+                        <option value="50" data-price="7200" selected>50 мл — 7 200 ₽</option>
+                        <option value="100" data-price="12000">100 мл — 12 000 ₽</option>
+                    </select>
+                </fieldset>
+
+                <div class="price-box">
+                    Цена: <span id="current-price">7 200</span> <strong>₽</strong>
+                </div>
+                <button type="button" class="btn-buy" onclick="addToCart()">Добавить в корзину</button>
+            </form>
+        </section>
+    </main>
+    <footer class="main-footer">
+        <small>&copy; 2026 Французкий ля парфюм. Все права защищены.</small>
+    </footer>
+
+    <!-- Интерактивный JavaScript сценарий -->
+    <script>
+        const volumeSelect = document.getElementById('volume-select');
+        const priceDisplay = document.getElementById('current-price');
+
+        // Изменение цены при выборе объема
+        volumeSelect.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            const price = selectedOption.getAttribute('data-price');
+            priceDisplay.textContent = Number(price).toLocaleString('ru-RU');
+        });
+
+        // Функция добавления в корзину
+        function addToCart() {
+            const volume = volumeSelect.value;
+            alert(`Товар "ЖанпольГотье" объемом ${volume}мл успешно добавлен в корзину!`);
+        }
+    </script>
+</body>
+</html>
